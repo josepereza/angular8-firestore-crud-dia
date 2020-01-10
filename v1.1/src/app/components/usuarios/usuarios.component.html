@@ -1,0 +1,66 @@
+<div class="sticky-container">
+  <ul class="sticky">
+      <li>
+        <button id="fijado" class="btn btn-outline-danger rounded-circle" role="button" (click)="newElemento(newElementoForm.value)"><i class="fa fa-plus"></i></button>
+        <div class="card">
+          <div class="card-body">
+            <h5> Introduce los datos: </h5>
+            <hr>
+            <form (ngSubmit)="newElemento(newElementoForm.value)" [formGroup]="newElementoForm" novalidate>
+              <input type="hidden" formControlName="id">
+              <div class="form-row">
+                <div class="col">
+                  <label for="usuario"><strong>Usuario: </strong></label>
+                  <input type="text" formControlName="usuario" class="form-control text-center text-uppercase" required maxlength="10" required>
+                    <div *ngIf="newElementoForm.controls['usuario'].invalid && (newElementoForm.controls['usuario'].dirty || newElementoForm.controls['usuario'].touched)"  class="alert alert-danger">
+                      <span *ngIf="newElementoForm.controls['usuario'].errors.required">
+                      Es usuario es obligatorio.
+                      </span>
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="ficheros"><strong>Ficheros: </strong></label>
+                  <input type="text" formControlName="ficheros" class="form-control text-center text-uppercase" required maxlength="1">
+                </div>
+                <div class="col">
+                  <label for="componentes"><strong>Componentes: </strong></label>
+                  <input type="text" formControlName="componentes" class="form-control text-center text-uppercase" required maxlength="1">
+                </div>
+                <div class="col">
+                  <label for="programas"><strong>Programas: </strong></label>
+                  <input type="text" formControlName="programas" class="form-control text-center text-uppercase" required maxlength="1">
+                </div>   
+              </div>
+              <div class="card-text text-center">
+                <!-- <input type="submit" class="btn btn-outline-success w-25 mt-4" [disabled]="!newElementoForm.valid" [value]="(currentStatus == 1) ? 'Agregar' : 'Editar'"> -->
+                <input type="submit" class="btn btn-outline-success w-25 mt-4" [disabled]="newElementoForm.pristine || newElementoForm.controls['usuario'].invalid"  [value]="(currentStatus == 1) ? 'Agregar' : 'Editar'">
+              </div>
+            </form>          
+          </div>
+        </div>
+      </li>
+  </ul>
+</div>
+
+<div cdkDropList class="item-list" (cdkDropListDropped)="drop($event)">
+  <div class="media border rounded mt-3 example-box" *ngFor="let elemento of elementos" cdkDrag>
+    <div class="media-body">
+      <div class="row m-3">
+        <div class="col font-weight-bold pr-0">{{elemento.data.usuario}}</div>
+        <div class="col font-weight-bold pr-0 text-danger" *ngIf="elemento.data.ficheros == '' "><span class="font-weight-bold" title="Ficheros"> PF/LF </span></div>
+        <div class="col font-weight-bold pr-0 text-success" *ngIf="elemento.data.ficheros != '' "><span class="font-weight-bold" title="Ficheros"> PF/LF </span></div>
+        <div class="col font-weight-bold pr-0 text-danger" *ngIf="elemento.data.componentes == '' "><span class="font-weight-bold" title="Componentes"> *SRVPGM </span></div>
+        <div class="col font-weight-bold pr-0 text-success" *ngIf="elemento.data.componentes != '' "><span class="font-weight-bold" title="Componentes"> *SRVPGM </span></div>
+        <div class="col font-weight-bold pr-0 text-danger" *ngIf="elemento.data.programas == '' "><span class="font-weight-bold" title="Modulos y Programas"> *PGM </span></div>
+        <div class="col font-weight-bold pr-0 text-success" *ngIf="elemento.data.programas != '' "><span class="font-weight-bold" title="Modulos y Programas"> *PGM </span></div>
+        <div class="font-weight-bold pr-0 text-success" *ngIf="elemento.data.ficheros != '' && elemento.data.componentes != '' && elemento.data.programas != '' " title="Terminado"><i class="fa fa-flag-checkered fa-2x" aria-hidden="true"></i></div>
+        <div class="font-weight-bold pr-0 text-danger" *ngIf="elemento.data.ficheros == '' || elemento.data.componentes == '' || elemento.data.programas == '' " title="No Terminado"><i class="fa fa-flag-checkered fa-2x" aria-hidden="true"></i></div>
+        <div class="btn-group btn-group-toggle ml-5" data-toggle="buttons">
+          <button class="btn btn-outline-warning" (click)="editElemento(elemento.id)" title="Editar"><i class="fa fa-edit fa-1x"></i></button>
+          <button class="btn btn-outline-danger" (click)="deleteElemento(elemento.id)" title="Eliminar"><i class="fa fa-times fa-1x"></i></button>        
+        </div>
+      </div>    
+    </div>
+  </div>
+</div>
+
