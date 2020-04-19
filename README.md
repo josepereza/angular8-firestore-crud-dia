@@ -1,5 +1,6 @@
 # mtto-angular-firestore
 Ejemplo de CRUD realizado con ANGULAR, FIRESTORE y BOOTSTRAP.
+De momento solo funciona la version 1.0
 
 > **UPDATE 10/01/2020:**: Repositorio actualizado **(Boton flotante de añadir, Validacion de "usuario" y Longitud de Inputs)
 Imagen Principal Artículo <p align="center"><img src="captura.jpg"></p> 
